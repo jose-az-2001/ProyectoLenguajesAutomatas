@@ -1,5 +1,6 @@
 
 import java.io.FilenameFilter;
+import javax.swing.DefaultListModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /*
@@ -156,6 +157,7 @@ public class Main extends javax.swing.JFrame {
         String path = file.getPath();
         jTextField1.setText(path);
         Text text = new Text();
+        jList1.setModel(new DefaultListModel());
         jTextArea1.setText(text.GetText(path));
         text.GetTokens("abdcsmejwfs");
         
