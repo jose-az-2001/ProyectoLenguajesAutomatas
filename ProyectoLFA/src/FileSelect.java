@@ -5,6 +5,7 @@
  */
 import javax.swing.*;
 import java.io.File;
+import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  *
  * @author JoseAz
@@ -15,6 +16,8 @@ public class FileSelect {
         File SelectedFile;
         JFileChooser SelectFile;
         SelectFile = new JFileChooser();
+        FileNameExtensionFilter filtro = new  FileNameExtensionFilter("*.TXT", "txt");
+        SelectFile.setFileFilter(filtro);
         SelectFile.showOpenDialog(null);
         SelectedFile = SelectFile.getSelectedFile();
         Path = SelectedFile+"";
