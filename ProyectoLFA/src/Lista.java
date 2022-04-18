@@ -40,8 +40,9 @@ public class Lista {
         while(aux!=null && num!=1){
             if(aux.ObtenerNombre().equals(valor)){
                 num=1;
+            }else{
+                aux=aux.ObtenerSiguiente();
             }
-            aux=aux.ObtenerSiguiente();
         }
         if(aux==null){
             
