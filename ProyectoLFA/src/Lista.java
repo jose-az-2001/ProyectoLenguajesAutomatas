@@ -9,11 +9,16 @@
  *
  * @author m825
  */
-public class Lista {
+import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
+
+public class Lista{
     private Nodo inicio;
     private int tamanio;
     private String result="";
     private Nodo auxi=new Nodo();
+    
+    
     public Lista(){
        this.inicio=null;
        this.tamanio=0;
@@ -34,7 +39,7 @@ public class Lista {
         this.tamanio++;
     }
     
-    public String Buscar(String valor){
+    public Nodo Buscar(String valor, int NoLinea){
         Nodo aux=inicio;
         int num=0;
         while(aux!=null && num!=1){
@@ -45,13 +50,17 @@ public class Lista {
             }
         }
         if(aux==null){
-            
-            return "El nombre no existe";
+            if (!valor.equals(""))
+            {
+                DefaultListModel modeloLista = new DefaultListModel();
+                String alerta = "Linea No. " + NoLinea + " : " + valor;
+                modeloLista.addElement(alerta);
+                Main.jList1.setModel(modeloLista);
+            }
         }else{
             aux.ModificarCount(aux.getCount()+1);
-            return "El nombre si existe";
         }
-        
+        return aux;
     }
     
     public void  EliminarFinal(){
@@ -84,5 +93,29 @@ public class Lista {
         }
       
         return result;
+    }
+    
+    public DefaultTableModel Modelo(Nodo aux){
+        DefaultTableModel dtmTokens = new DefaultTableModel();
+        String[] cabecera = {"Token","Tipo","Cantidad"};
+        dtmTokens.setColumnIdentifiers(cabecera);
+        dtmTokens = Objetar(aux,dtmTokens);
+        return dtmTokens;
+    }
+    
+    public DefaultTableModel Objetar(Nodo aux, DefaultTableModel dtmTokens){
+        Object[] datos = new Object[Main.JT1.getColumnCount()];
+        if(aux!=null){
+           if (aux.getCount() > 0)
+           {
+                datos[0] = aux.ObtenerNombre();
+                datos[1] = aux.getTipo();
+                datos[2] = aux.getCount();
+                dtmTokens.addRow(datos);
+           }
+           Objetar(aux.ObtenerSiguiente(),dtmTokens);
+        }
+      
+        return dtmTokens;
     }
 }

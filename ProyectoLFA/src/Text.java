@@ -21,17 +21,21 @@ public class Text {
         try{
             FileReader file = new FileReader(Path);
             BufferedReader buffer = new BufferedReader(file);
-            
+            int noLinea = 0;
             
             while((Text = buffer.readLine()) != null){
+                noLinea++;
                 cadena = cadena + Text + '\n';
+                Text = Text + " ";
                 Npalabras(Text);
-                palabra(Text);
+                palabra(noLinea,Text);
+                
             }
         }catch(Exception e){
             System.out.println(e);
         }
-        System.out.print(lista.Recorrido(lista.GetInicio()));
+        //System.out.print(lista.Recorrido(lista.GetInicio()));
+        Main.JT1.setModel(lista.Modelo(lista.GetInicio()));
         return cadena;
     }
     public int Npalabras(String txt){
@@ -44,15 +48,25 @@ public class Text {
         c++;
         return c;
     }
-    public void palabra(String txt){
+    public void palabra(int noLinea, String txt){
         String palabra="";
-        
         for(int i=0;i<txt.length();i++){
             if(txt.charAt(i)==' '){
-                System.out.println("."+palabra+".");
-                System.out.println(lista.Buscar(palabra));
+                if ((palabra.matches("[+-]?\\d*(\\.\\d+)?")) && !palabra.equals(""))
+                {
+                    lista.Insertar(palabra,"numeros", 0);
+                }
+                else if (palabra.equals(palabra.toLowerCase()))
+                {
+                    if (!Character.isDigit(palabra.charAt(0)))
+                    {
+                        lista.Insertar(palabra,"identificador", 0);
+                    }
+                }
+                lista.Buscar(palabra,noLinea);
                 palabra="";
-            }else{
+            }
+            else{
                 palabra+=txt.charAt(i);
             }
             
